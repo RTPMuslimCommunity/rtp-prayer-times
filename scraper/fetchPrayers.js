@@ -2,6 +2,7 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs");
 
+// JIAR via Masjidal API
 async function fetchJIAR() {
   const parkwood = await axios.get(
     "https://masjidal.com/api/v1/time?masjid_id=M9L2eyKZ"
@@ -16,6 +17,7 @@ async function fetchJIAR() {
   };
 }
 
+// Generic HTML scraper for other masjids
 async function scrapeGenericMasjid(url, orgName) {
   try {
     const { data } = await axios.get(url);
@@ -23,6 +25,7 @@ async function scrapeGenericMasjid(url, orgName) {
 
     let prayers = {};
 
+    // This selector may need adjustment per masjid
     $("table tr").each((i, row) => {
       const cols = $(row).find("td");
       if (cols.length >= 2) {
@@ -57,8 +60,10 @@ async function main() {
     },
   };
 
+  // JIAR Masjidal API
   result.daily.jiar = await fetchJIAR();
 
+  // Other Masjids via HTML scraping
   result.daily.iar = await scrapeGenericMasjid(
     "https://raleighmasjid.org/",
     "IAR"
@@ -89,7 +94,7 @@ async function main() {
     JSON.stringify(result, null, 2)
   );
 
-  console.log("Prayer times updated.");
+  console.log("✅ Prayer times updated.");
 }
 
 main();
