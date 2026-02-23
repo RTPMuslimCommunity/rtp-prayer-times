@@ -1,0 +1,21 @@
+{
+  "lastUpdated": "2026-02-22T13:00:00.000Z",
+  "daily": {
+    "jiar": {
+      "parkwood": {
+        "salah": {
+          "fajr": "5:43 AM",
+          "zuhr": "12:29 PM"
+        },
+        "iqama": {
+          "fajr": "6:15 AM",
+          "jummah1": "1:00 PM"
+        }
+      }
+    },
+    "iar": {
+      "fajr": "6:00 AM",
+      "dhuhr": "1:30 PM"
+    }
+  }
+}
