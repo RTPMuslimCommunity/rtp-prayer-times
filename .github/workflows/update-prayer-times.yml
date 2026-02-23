@@ -1,9 +1,9 @@
 name: Update Prayer Times
 
 on:
+  workflow_dispatch:  # Manual trigger
   schedule:
-    - cron: '0 23 * * *'   # 11 PM EST (adjust if needed)
-  workflow_dispatch:
+    - cron: '0 23 * * *'  # 8 AM EST
 
 jobs:
   update:
@@ -13,22 +13,21 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Setup Node
+      - name: Setup Node 18
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
       - name: Install Dependencies
-        run: |
-          npm install axios cheerio
+        run: npm ci
 
       - name: Run Scraper
-        run: node scraper/fetchPrayers.js
+        run: npm start
 
-      - name: Commit Changes
+      - name: Commit Changes if Any
         run: |
           git config --global user.name "Prayer Bot"
           git config --global user.email "bot@rtpmuslimcommunity.space"
           git add .
-          git commit -m "Auto update prayer times"
+          git diff --quiet || git commit -m "Auto update prayer times"
           git push
